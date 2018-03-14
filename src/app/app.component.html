@@ -1,7 +1,131 @@
-<div *ngIf="loading">
-  Page is loading
+<div class="mat-elevation-z2">
+  <mat-table #table [dataSource]="juices" matSort>
+    <ng-container matColumnDef="Month">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Month
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.Month}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Value">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Value
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.Value}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Unit_ID">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Unit ID
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.Unit_ID}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Market_Year">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Market Year
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.Market_Year}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Attribute_ID">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Attribute ID
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.Attribute_ID}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Country_Code">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Country Code
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.Country_Code}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Country_Name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Country
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.Country_Name}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Calendar_Year">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Calendar Year
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.Calendar_Year}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Commodity_Code">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Commodity Code
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.Commodity_Code}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Unit_Description">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Unit Description
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.Unit_Description}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Attribute_Description">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Attribute Description
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.Attribute_Description}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Commodity_Description">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Commodity Description
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.Commodity_Description}}
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="getColumns()"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: getColumns();"></mat-row>
+  </mat-table>
+
+  <mat-paginator
+    #paginator
+    [pageSize]="10"
+    [showFirstLastButtons]="true"
+    [pageSizeOptions]="[5, 10, 100]">
+  </mat-paginator>
 </div>
 
-<div *ngIf="!loading">
-  CSV will show here
+<div class="backdrop" *ngIf="loading">
+  <div class="spinner">
+    <div class="rect1"></div>
+    <div class="rect2"></div>
+    <div class="rect3"></div>
+    <div class="rect4"></div>
+    <div class="rect5"></div>
+  </div>
 </div>
