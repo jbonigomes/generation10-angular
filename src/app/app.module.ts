@@ -38,10 +38,12 @@ import { MatButtonToggleModule } from '@angular/material';
 import { MatProgressSpinnerModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
