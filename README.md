@@ -34,8 +34,8 @@ If you wish to re-seed the SQLite DB:
 
 - [Moment.js](http://momentjs.com) was used to handle dates
 - [PapaParse](http://papaparse.com) was used to parse csv's
-- [AngularMaterial](http://material.angular.io) was the chosen UI elements
-- [Britecharts](http://eventbrite.github.io/britecharts) was used for the data visualisation
+- [AngularMaterial](http://material.angular.io) table component
+- [Britecharts](http://eventbrite.github.io/britecharts) donut and bar charts
 
 ## Loading animation
 
