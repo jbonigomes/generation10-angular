@@ -22,6 +22,4 @@ You can then point your browser to 'http://localhost:4200' to navigate the app.
 
 # Loading animation
 
-The loading animation has been donated by:
-
-[tobiasahlin](http://tobiasahlin.com/spinkit)
+The loading animation has been donated by [tobiasahlin](http://tobiasahlin.com/spinkit)
