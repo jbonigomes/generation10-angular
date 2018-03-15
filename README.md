@@ -20,7 +20,7 @@ Run the app:
 
     $ ng serve
 
-You can now point your browser to [http://localhost:4200] and navigate the app.
+You can now point your browser to http://localhost:4200 and navigate the app.
 
 ## Libraries
 
