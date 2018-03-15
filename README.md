@@ -7,11 +7,21 @@ First install all dependencies:
 
     $ yarn install
 
-Then run the app:
+Then populate the SQLite DB:
+
+    $ cd server
+    $ php populate_db.php
+
+Finally, run the API:
+
+    $ php -S localhost:8000
+
+To run the frontend application, in a new terminal window, navigate to the root
+of the app and run:
 
     $ ng serve
 
-You can then point your browser to 'http://localhost:4200' to navigate the app.
+You can now point your browser to 'http://localhost:4200' to navigate the app.
 
 # Libraries
 

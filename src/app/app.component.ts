@@ -15,6 +15,8 @@ import { MatTableDataSource } from '@angular/material';
 
 import { Juice } from './app.types'
 
+import { AppService } from './app.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -22,32 +24,28 @@ import { Juice } from './app.types'
 })
 export class AppComponent implements AfterViewInit {
   loading: boolean;
+  appService: AppService;
   juices: MatTableDataSource<Juice>;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor() {
+  constructor(appService: AppService) {
     this.loading = true;
+    this.appService = appService;
     this.juices = new MatTableDataSource<Juice>();
   }
 
-  ngAfterViewInit() {
-    Papa.parse('/assets/psd_juice.csv', {
-      header: true,
-      download: true,
-      complete: (results) => {
-        this.juices.data = results.data;
+  async ngAfterViewInit() {
+    this.juices.data = <any>(await this.appService.getData());
 
-        this.juices.sort = this.sort;
-        this.juices.paginator = this.paginator;
+    this.juices.sort = this.sort;
+    this.juices.paginator = this.paginator;
 
-        this.drawDonuts(results.data);
-        this.drawBarCharts(results.data);
+    this.drawDonuts(this.juices.data);
+    this.drawBarCharts(this.juices.data);
 
-        this.loading = false;
-      }
-    });
+    this.loading = false;
   }
 
   getColumns() {
@@ -67,6 +65,22 @@ export class AppComponent implements AfterViewInit {
     ];
   }
 
+  drawBarCharts(data) {
+    const marketData = this.barAggregator(data, 'Value', 'Market_Year');
+    const calendarData = this.barAggregator(data, 'Value', 'Calendar_Year');
+
+    this.drawBarChart(marketData, '.market-bar-chart');
+    this.drawBarChart(calendarData, '.calendar-bar-chart');
+  }
+
+  drawDonuts(data) {
+    const countriesData = this.donutAggregator(data, 'Country_Name', 'Country_Code');
+    const attributesData = this.donutAggregator(data, 'Attribute_Description', 'Attribute_ID');
+
+    this.drawDonut(countriesData, '.countries-donut');
+    this.drawDonut(attributesData, '.attribute-donut');
+  }
+
   donutAggregator(data, column, id) {
     const agg = data.reduce((acc, row) => {
       acc[row[column]] = {
@@ -79,31 +93,6 @@ export class AppComponent implements AfterViewInit {
     }, {});
 
     return Object.values(agg);
-  }
-
-  drawDonuts(data) {
-    const countriesData = this.donutAggregator(data, 'Country_Name', 'Country_Code');
-    const attributesData = this.donutAggregator(data, 'Attribute_Description', 'Attribute_ID');
-
-    this.drawDonut(countriesData, '.countries-donut');
-    this.drawDonut(attributesData, '.attribute-donut');
-  }
-
-  drawDonut(data, target) {
-    const container = d3Selection.select(target);
-
-    if (container.node()) {
-      const chart = (new DonutChart)
-        .width(150)
-        .height(150)
-        .isAnimated(true)
-        .internalRadius(40)
-        .externalRadius(70)
-        .hasFixedHighlightedSlice(true)
-        .highlightSliceById(data[0].id);
-
-      container.datum(data).call(chart);
-    }
   }
 
   barAggregator(data, column, id) {
@@ -119,14 +108,6 @@ export class AppComponent implements AfterViewInit {
     }, {});
 
     return Object.values(agg);
-  }
-
-  drawBarCharts(data) {
-    const marketData = this.barAggregator(data, 'Value', 'Market_Year');
-    const calendarData = this.barAggregator(data, 'Value', 'Calendar_Year');
-
-    this.drawBarChart(marketData, '.market-bar-chart');
-    this.drawBarChart(calendarData, '.calendar-bar-chart');
   }
 
   drawBarChart(data, target) {
@@ -145,6 +126,23 @@ export class AppComponent implements AfterViewInit {
 
       container.datum(data).call(chart);
       container.select('.metadata-group').datum([]).call(miniTooltip);
+    }
+  }
+
+  drawDonut(data, target) {
+    const container = d3Selection.select(target);
+
+    if (container.node()) {
+      const chart = (new DonutChart)
+        .width(150)
+        .height(150)
+        .isAnimated(true)
+        .internalRadius(40)
+        .externalRadius(70)
+        .hasFixedHighlightedSlice(true)
+        .highlightSliceById(data[0].id);
+
+      container.datum(data).call(chart);
     }
   }
 }

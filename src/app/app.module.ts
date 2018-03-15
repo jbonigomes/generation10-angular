@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -37,6 +38,7 @@ import { MatAutocompleteModule } from '@angular/material';
 import { MatButtonToggleModule } from '@angular/material';
 import { MatProgressSpinnerModule } from '@angular/material';
 
+import { AppService } from './app.service';
 import { AppComponent } from './app.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 
@@ -48,6 +50,8 @@ import { SpinnerComponent } from './spinner/spinner.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+
+    HttpClientModule,
 
     CdkTableModule,
 
@@ -84,7 +88,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
     MatButtonToggleModule,
     MatProgressSpinnerModule
   ],
-  providers: [],
+  providers: [AppService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
