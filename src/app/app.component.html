@@ -1,20 +1,62 @@
+<mat-grid-list cols="5" rowHeight="300px">
+  <mat-grid-tile colspan="2">
+    <div>
+      <div class="market-bar-chart"></div>
+      <div class="bar-chart-label">Value by Market Year</div>
+    </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <div>
+      <div class="attribute-donut"></div>
+      <div class="countries-donut"></div>
+    </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile colspan="2">
+    <div>
+      <div class="calendar-bar-chart"></div>
+      <div class="bar-chart-label">Value by Calendar Year</div>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>
+
 <div class="mat-elevation-z2">
   <mat-table #table [dataSource]="juices" matSort>
-    <ng-container matColumnDef="Month">
+
+    <ng-container matColumnDef="Commodity_Code">
       <mat-header-cell *matHeaderCellDef mat-sort-header>
-        Month
+        Commodity Code
       </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        {{element.Month}}
+        {{element.Commodity_Code}}
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="Value">
+    <ng-container matColumnDef="Commodity_Description">
       <mat-header-cell *matHeaderCellDef mat-sort-header>
-        Value
+        Commodity Description
       </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        {{element.Value}}
+        {{element.Commodity_Description}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Attribute_ID">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Attribute ID
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.Attribute_ID}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Attribute_Description">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Attribute Description
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.Attribute_Description}}
       </mat-cell>
     </ng-container>
 
@@ -27,21 +69,12 @@
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="Market_Year">
+    <ng-container matColumnDef="Unit_Description">
       <mat-header-cell *matHeaderCellDef mat-sort-header>
-        Market Year
+        Unit Description
       </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        {{element.Market_Year}}
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="Attribute_ID">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>
-        Attribute ID
-      </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        {{element.Attribute_ID}}
+        {{element.Unit_Description}}
       </mat-cell>
     </ng-container>
 
@@ -63,48 +96,39 @@
       </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="Value">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="numeric">
+        Value
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="numeric">
+        {{element.Value | currency:'GBP':'symbol-narrow':'1.2-2'}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Month">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="numeric">
+        Month
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="numeric">
+        {{element.Month}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Market_Year">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="numeric">
+        Market Year
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="numeric">
+        {{element.Market_Year}}
+      </mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="Calendar_Year">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="numeric">
         Calendar Year
       </mat-header-cell>
-      <mat-cell *matCellDef="let element">
+      <mat-cell *matCellDef="let element" class="numeric">
         {{element.Calendar_Year}}
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="Commodity_Code">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>
-        Commodity Code
-      </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        {{element.Commodity_Code}}
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="Unit_Description">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>
-        Unit Description
-      </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        {{element.Unit_Description}}
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="Attribute_Description">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>
-        Attribute Description
-      </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        {{element.Attribute_Description}}
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="Commodity_Description">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>
-        Commodity Description
-      </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        {{element.Commodity_Description}}
       </mat-cell>
     </ng-container>
 
@@ -114,7 +138,7 @@
 
   <mat-paginator
     #paginator
-    [pageSize]="10"
+    [pageSize]="5"
     [showFirstLastButtons]="true"
     [pageSizeOptions]="[5, 10, 100]">
   </mat-paginator>

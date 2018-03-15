@@ -1,4 +1,9 @@
 import * as Papa from 'papaparse';
+import * as d3Selection from 'd3-selection';
+
+import * as BarChart from 'britecharts/dist/umd/bar.min';
+import * as DonutChart from 'britecharts/dist/umd/donut.min';
+import * as MiniTooltip from 'britecharts/dist/umd/miniTooltip.min';
 
 import { Component } from '@angular/core';
 import { ViewChild } from '@angular/core';
@@ -37,6 +42,9 @@ export class AppComponent implements AfterViewInit {
         this.juices.sort = this.sort;
         this.juices.paginator = this.paginator;
 
+        this.drawDonuts(results.data);
+        this.drawBarCharts(results.data);
+
         this.loading = false;
       }
     });
@@ -44,18 +52,99 @@ export class AppComponent implements AfterViewInit {
 
   getColumns() {
     return [
-      'Month',
-      'Value',
-      'Unit_ID',
-      'Market_Year',
+      'Commodity_Code',
+      'Commodity_Description',
       'Attribute_ID',
+      'Attribute_Description',
+      'Unit_ID',
+      'Unit_Description',
       'Country_Code',
       'Country_Name',
+      'Value',
+      'Month',
+      'Market_Year',
       'Calendar_Year',
-      'Commodity_Code',
-      'Unit_Description',
-      'Attribute_Description',
-      'Commodity_Description'
     ];
+  }
+
+  donutAggregator(data, column, id) {
+    const agg = data.reduce((acc, row) => {
+      acc[row[column]] = {
+        id: row[column],
+        name: row[column],
+        quantity: acc[row[column]] ? acc[row[column]].quantity + 1 : 1
+      };
+
+      return acc;
+    }, {});
+
+    return Object.values(agg);
+  }
+
+  drawDonuts(data) {
+    const countriesData = this.donutAggregator(data, 'Country_Name', 'Country_Code');
+    const attributesData = this.donutAggregator(data, 'Attribute_Description', 'Attribute_ID');
+
+    this.drawDonut(countriesData, '.countries-donut');
+    this.drawDonut(attributesData, '.attribute-donut');
+  }
+
+  drawDonut(data, target) {
+    const container = d3Selection.select(target);
+
+    if (container.node()) {
+      const chart = (new DonutChart)
+        .width(150)
+        .height(150)
+        .isAnimated(true)
+        .internalRadius(40)
+        .externalRadius(70)
+        .hasFixedHighlightedSlice(true)
+        .highlightSliceById(data[0].id);
+
+      container.datum(data).call(chart);
+    }
+  }
+
+  barAggregator(data, column, id) {
+    const agg = data.reduce((acc, row) => {
+      const val = parseFloat(row[column]);
+
+      acc[row[id]] = {
+        name: row[id],
+        value: acc[row[id]] ? val + parseFloat(acc[row[id]].value) : val
+      };
+
+      return acc;
+    }, {});
+
+    return Object.values(agg);
+  }
+
+  drawBarCharts(data) {
+    const marketData = this.barAggregator(data, 'Value', 'Market_Year');
+    const calendarData = this.barAggregator(data, 'Value', 'Calendar_Year');
+
+    this.drawBarChart(marketData, '.market-bar-chart');
+    this.drawBarChart(calendarData, '.calendar-bar-chart');
+  }
+
+  drawBarChart(data, target) {
+    const miniTooltip = new MiniTooltip();
+    const container = d3Selection.select(target);
+
+    if (container.node()) {
+      const chart = (new BarChart)
+        .width(500)
+        .height(250)
+        .isAnimated(true)
+        .on('customMouseOut', miniTooltip.hide)
+        .on('customMouseOver', miniTooltip.show)
+        .on('customMouseMove', miniTooltip.update)
+        .margin({ left: 0, right: 0, top: 0, bottom: 0 });
+
+      container.datum(data).call(chart);
+      container.select('.metadata-group').datum([]).call(miniTooltip);
+    }
   }
 }
