@@ -15,13 +15,13 @@ You can then point your browser to 'http://localhost:4200' to navigate the app.
 
 # Libraries
 
-- [Moment.js](momentjs.com) was used to handle dates
-- [PapaParse](papaparse.com) was used to parse csv's
-- [AngularMaterial](material.angular.io) was the chosen UI elements
-- [Britecharts](eventbrite.github.io/britecharts) was used for the data visualisation
+- [Moment.js](http://momentjs.com) was used to handle dates
+- [PapaParse](http://papaparse.com) was used to parse csv's
+- [AngularMaterial](http://material.angular.io) was the chosen UI elements
+- [Britecharts](http://eventbrite.github.io/britecharts) was used for the data visualisation
 
 # Loading animation
 
 The loading animation has been donated by:
 
-[tobiasahlin](tobiasahlin.com/spinkit)
+[tobiasahlin](http://tobiasahlin.com/spinkit)
