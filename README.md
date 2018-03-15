@@ -1,9 +1,12 @@
 # Generation10 test
 
-This application has been build with Angular 5, Node.js >= 8.10.0 and Yarn are
-required to run this application.
+Dependencies:
 
-First install all dependencies:
+- Yarn
+- Angular 5
+- Node.js >= 8.10.0
+
+First install all Yarn dependencies:
 
     $ yarn install
 
@@ -16,8 +19,7 @@ Finally, run the API:
 
     $ php -S localhost:8000
 
-To run the frontend application, in a new terminal window, navigate to the root
-of the app and run:
+Open a new terminal window, navigate to the root of the app and run:
 
     $ ng serve
 
