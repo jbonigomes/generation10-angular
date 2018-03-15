@@ -24,7 +24,7 @@ Finally, open a new terminal window, navigate to the root of the app and run:
 
     $ ng serve
 
-You can now point your browser to (http://localhost:4200) and navigate the app.
+You can now point your browser to http://localhost:4200 and navigate the app.
 
 If you wish to re-seed the SQLite DB:
 
